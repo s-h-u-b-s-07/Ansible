@@ -1,0 +1,11 @@
+PLAY.YAML
+
+---
+- hosts: slave
+  become: yes
+  name: play1
+  tasks:
+         - name: install Apache
+           apt: name=apache2 state=latest
+
+

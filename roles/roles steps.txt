@@ -1,0 +1,88 @@
+cd /etc/ansible/roles
+sudo apt install tree
+sudo ansible-galaxy init <role name> --offline
+tree <role name>
+
+web
+├── README.md
+├── defaults
+│   └── main.yml
+├── files
+│   └── index.html
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── tasks
+│   ├── configure.yml
+│   ├── install.yml
+│   ├── main.yml
+│   └── service.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+
+
+
+
+
+cd web
+cd tasks
+
+sudo nano main.yml
+---
+# tasks file for web
+- include: install.yml
+- include: configure.yml
+- include: service.yml
+
+
+sudo nano install.yml
+---
+  - name: Install Apache2
+    apt: name=apache2 update_cache=yes state=latest
+
+
+sudo nano configure.yml
+---
+  - name: Configure Website
+    copy: src=index.html dest=/var/www/html
+
+
+sudo nano service.yml
+---
+  - name: Start Apache2 service
+    service: name=apache2 state=started
+
+
+cd ..
+cd files
+sudo nano index.html
+
+<html>
+<body>
+<h1>WELCOME TO ANSIBLE HTML PAGE</h1>
+</body>
+</html>
+
+
+cd ..
+cd ..
+cd ..
+(ansible folder)
+
+sudo nano site.yaml
+---
+ - hosts: servers
+   become: yes
+   roles:
+    - web
+
+
+ansible-playbook site.yaml --syntax-check
+ansible-playbook site.yaml
+
+[OPEN PORT 80 IN SLAVE]

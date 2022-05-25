@@ -1,0 +1,63 @@
+STEP1 -------> INSTALLATION OF ANSIBLE ON AWS:
+
+launch 2 instances  (securtiy group:  SSH--> custom  ,  all traffic --> anywhere)
+
+1st instance --> master
+2nd instance --> slave
+
+open 2 terminals and connect both to both instance
+
+
+on both terminals do (sudo apt-get update)
+
+
+
+
+ON MASTER:
+	sudo apt install software-properties-common
+	sudo apt-add-repository ppa:ansible/ansible
+	sudo apt update
+	sudo apt install ansible
+
+
+ON SLAVE:
+	sudo apt-get install python
+
+
+
+STEP2 -------> CONFIGUR SSH ACCESS TO ANSIBLE HOST(SLAVE)
+
+ON MASTER:
+	ssh ubuntu@(_____public ip address of slave)
+	cd .ssh
+	ls  (known host, authorized keys)
+	ssh-keygen  (do repeated enter until we get *** msg)
+	cat id_rsa.pub   (copy the code and go to slave)
+
+
+ON SLAVE:
+	cd .ssh
+	sudo nano authorized keys  (paste the copied code here)
+
+ON MASTER:
+	ssh ubuntu@(_____public ip address of slave)
+	exit
+
+
+STEP3 -------> SETTING UP ANSIBLE HOST AND TESTING CONNECTION
+
+ON MASTER:
+	sudo nano /etc/ansible/hosts 
+
+	[production] ----->group
+	slave ansible_ssh_host=(public ip of slave)
+	
+	save
+
+	ansible -m ping all  [other options:  ansible -m ping production ,  ansible -m ping slave]
+
+
+
+TO RUN ANSIBLE PLAYBOOK:
+
+	ansible-playbook (yaml file name)

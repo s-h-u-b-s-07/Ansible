@@ -1,0 +1,33 @@
+hello.sh
+
+
+#!bin/bash/ssh
+
+echo hello world > /var/www/html/1.html
+
+
+
+
+
+sudo chmod -R 777 hello.sh (made this file executable)
+
+
+
+
+PLAYBOOK
+
+---
+ - hosts: slave1
+   become: yes
+   name: play1
+   tasks:
+    - name: install nginx
+      apt: name=nginx state=latest
+ - hosts: slave2
+   become: yes
+   name: play2
+   tasks:
+    - name: install Apache
+      apt: name=apache2 state=latest
+    - name: Adding website
+      script: hello.sh

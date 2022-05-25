@@ -1,0 +1,16 @@
+#playbook for launcing 2 software on different servers
+---
+- hosts: slave1
+  become: yes
+  name: play1
+  tasks:
+         - name: install nginx
+           apt: name=nginx state=latest
+
+
+- hosts: slave2
+  become: yes
+  name: play2
+  tasks:
+         - name: install Apache
+           apt: name=apache2 state=latest

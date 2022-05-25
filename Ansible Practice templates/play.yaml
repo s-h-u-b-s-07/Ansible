@@ -1,0 +1,8 @@
+#launch 1 software on single server
+---
+- hosts: slave
+  become: yes
+  name: play1
+  tasks:
+         - name: install Apache
+           apt: name=apache2 state=latest
