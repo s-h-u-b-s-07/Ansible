@@ -21,7 +21,7 @@ ON MASTER:
 
 
 ON SLAVE:
-	sudo apt-get install python
+	sudo apt-get install python -y
 
 
 
