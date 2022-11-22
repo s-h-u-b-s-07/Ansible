@@ -7,3 +7,29 @@ worker2 ansible_host=worker_2_ip
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
+
+--------------------------------------------------------------------------------
+
+for automating hostname to the perticular instance use below formate for hosts file and run playbook
+
+
+HOST file
+
+[control_plane]
+control1 ansible_host=control_plane_ip ansible_user=root new_hostname=control
+
+[workers]
+worker1 ansible_host=worker_1_ip ansible_user=root new_hostname=worker1
+worker2 ansible_host=worker_2_ip ansible_user=root new_hostname=worker2
+
+
+----------
+PLAYBOOK
+
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: "update hostnames"
+    hostname:
+      name: "{{ new_hostname }}"
